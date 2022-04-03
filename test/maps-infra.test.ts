@@ -7,7 +7,14 @@ test("S3 Created", () => {
   const stack = new MapsInfra.MapsInfraStack(app, "MyTestStack");
   const template = Template.fromStack(stack);
 
-  template.hasResourceProperties("AWS::S3::Bucket", {});
+  template.hasResourceProperties("AWS::S3::Bucket", {
+    PublicAccessBlockConfiguration: {
+      BlockPublicAcls: true,
+      BlockPublicPolicy: true,
+      IgnorePublicAcls: true,
+      RestrictPublicBuckets: true,
+    },
+  });
 });
 
 test("CloudFront Created", () => {
